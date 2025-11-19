@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Um site pra você 💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Pacifico&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1:#FFF0F6; --bg2:#FFF7ED; --accent:#FF6FB5; --accent-2:#FFD6E7; --card:#FFFFFF; --muted:#7B6B7B;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:'Quicksand',system-ui,Arial;background:linear-gradient(135deg,var(--bg1),var(--bg2));color:#3b2b3b}
+    .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:48px}
+    .card{width:960px;max-width:96%;background:linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.95));border-radius:20px;box-shadow:0 8px 30px rgba(0,0,0,0.08);overflow:hidden;display:grid;grid-template-columns:380px 1fr}
+    .left{padding:36px;background:linear-gradient(180deg, #fff, var(--card));display:flex;flex-direction:column;align-items:center;gap:18px}
+    .avatar{width:180px;height:180px;border-radius:50%;background:radial-gradient(circle at 30% 20%, #fff, #ffe6f3 30%, #ffd6e7 60%, #ffb3dd 100%);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(255,111,181,0.18);position:relative}
+    .avatar svg{width:110px;height:110px;filter:drop-shadow(0 4px 12px rgba(255,111,181,0.12))}
+    h1{font-family:'Pacifico';margin:0;font-size:34px;color:var(--accent)}
+    p.lead{margin:0;color:var(--muted);text-align:center}
+    .badges{display:flex;gap:8px;margin-top:6px}
+    .badge{background:linear-gradient(90deg,var(--accent),#ff9acb);color:white;padding:8px 12px;border-radius:999px;font-weight:600;font-size:13px;box-shadow:0 6px 14px rgba(255,111,181,0.12)}
+
+    .right{padding:36px;display:flex;flex-direction:column;gap:16px}
+    .message{background:linear-gradient(180deg, rgba(255,255,255,0.65), rgba(255,255,255,0.5));border-radius:12px;padding:18px;min-height:140px;display:flex;align-items:center;justify-content:center;font-size:18px}
+    .message p{margin:0;line-height:1.5}
+    .cta-row{display:flex;gap:12px;align-items:center}
+    .btn{background:var(--accent);color:white;padding:12px 18px;border-radius:12px;border:0;font-weight:700;cursor:pointer;box-shadow:0 8px 20px rgba(255,111,181,0.18)}
+    .btn.ghost{background:transparent;color:var(--accent);border:2px solid rgba(255,111,181,0.12)}
+    .notes{color:var(--muted);font-size:13px}
+
+    .hearts{position:absolute;pointer-events:none;inset:0;z-index:0}
+    .footer{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px;margin-top:6px}
+
+    /* floating hearts animation */
+    .heart{position:absolute;width:20px;height:20px;opacity:0.9;transform-origin:center}
+
+    @media (max-width:820px){.card{grid-template-columns:1fr;}.left{padding:24px}.right{padding:24px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="left">
+        <div style="position:relative;width:100%;display:flex;justify-content:center;">
+          <div class="avatar">
+            <!-- cute emoji flower -->
+            <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+              <circle cx="32" cy="32" r="10" fill="#fff2fb" stroke="#ffd6e7" stroke-width="1"/>
+              <path d="M32 6c2 7 11 8 11 18s-9 11-11 18c-2-7-11-8-11-18S30 13 32 6z" fill="#ffb3dd" opacity="0.9"/>
+              <g transform="translate(6,6)" fill="#fff">
+                <circle cx="20" cy="8" r="3"/>
+                <circle cx="36" cy="20" r="3"/>
+                <circle cx="20" cy="32" r="3"/>
+                <circle cx="4" cy="20" r="3"/>
+              </g>
+            </svg>
+          </div>
+        </div>
+        <h1>Para você ✨</h1>
+        <p class="lead">Um cantinho feito com carinho por alguém que gosta muito de você 
+          (seu admirador secreto). </p>
+        <div class="badges">
+          <div class="badge">Para a menina dos olhos bonitos da minha academia</div>
+          <div class="badge">Xará da minha gata</div>
+        </div>
+        <div style="flex:1"></div>
+        <div class="footer">
+          <span>feito por: <strong>David</strong></span>
+          <span>💌 mensagem especial</span>
+        </div>
+      </div>
+
+      <div class="right">
+        <div class="message" id="messageBox">
+          <p id="mainText">Oi! 💖<br>Quero que saiba que você deixa meus dias mais bonitos. Você topa sair comigo um dia desses?</p>
+        </div>
+
+        <div class="cta-row">
+          <button class="btn" id="surpriseBtn">Surpresa ✨</button>
+          <button class="btn ghost" id="changeBtn">Editar mensagem</button>
+        </div>
+
+        <div class="notes">Dica: clique em "Editar mensagem" para personalizar o texto; em "Surpresa" tem uma coisinha a mais 😉</div>
+
+        <div style="display:flex;gap:12px;align-items:center;margin-top:auto">
+          <input id="nameInput" placeholder="Escreva algo lindo..." style="flex:1;padding:12px;border-radius:10px;border:2px dashed rgba(0,0,0,0.05);font-weight:600" />
+          <button class="btn" id="applyBtn">Aplicar</button>
+        </div>
+
+      </div>
+
+      <div class="hearts" aria-hidden></div>
+    </div>
+  </div>
+
+  <script>
+    // playful hearts
+    const heartsContainer = document.querySelector('.hearts');
+    function createHeart(x, y, size, delay){
+      const el = document.createElement('div');
+      el.className = 'heart';
+      const hue = Math.round(330 + Math.random()*30);
+      el.style.left = x+'px'; el.style.top = y+'px'; el.style.width = size+'px'; el.style.height = size+'px';
+      el.style.opacity = (0.6 + Math.random()*0.4);
+      el.innerHTML = `
+        <svg viewBox="0 0 24 24" width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 21s-7-4.35-9-6.7C-0.5 9.9 4 4.7 8 6c1.2.5 2 1.6 4 3 2-1.4 2.8-2.5 4-3 4-1.3 8.5 3.9 5 8.3C19 16.65 12 21 12 21z" fill="hsl(${hue}deg 80% 70%)" />
+        </svg>`;
+      heartsContainer.appendChild(el);
+      const rise = 40 + Math.random()*120;
+      el.animate([
+        {transform: 'translateY(0) scale(0.9)', opacity: el.style.opacity},
+        {transform: `translateY(-${rise}px) scale(1.05)`, opacity: 0}
+      ],{duration: 2000 + Math.random()*1800, easing: 'cubic-bezier(.2,.9,.3,1)', delay});
+      setTimeout(()=>el.remove(), 4000 + Math.random()*2000 + delay);
+    }
+    // spawn gentle hearts
+    setInterval(()=>{
+      const w = window.innerWidth, h = window.innerHeight;
+      const x = Math.random()*w; const y = h*0.7 + Math.random()*h*0.2;
+      createHeart(x,y,12+Math.random()*18, Math.random()*600);
+    },600);
+
+    // buttons
+    const surpriseBtn = document.getElementById('surpriseBtn');
+    const changeBtn = document.getElementById('changeBtn');
+    const applyBtn = document.getElementById('applyBtn');
+    const nameInput = document.getElementById('nameInput');
+    const mainText = document.getElementById('mainText');
+
+    surpriseBtn.addEventListener('click', ()=>{
+      // simple confetti effect using many hearts
+      for(let i=0;i<30;i++){
+        const x = window.innerWidth/2 + (Math.random()-0.5)*300;
+        const y = window.innerHeight/2 + (Math.random()-0.5)*200;
+        createHeart(x,y,8+Math.random()*22,i*30);
+      }
+      // playful replacement
+      const old = mainText.innerHTML;
+      mainText.innerHTML = 'Surpresa! 🌟\nEspero que isso tenha te feito sorrir. Quer comer um macarrão comigo?🍝 ';
+      setTimeout(()=>{mainText.innerHTML = old;},4000);
+    });
+
+    changeBtn.addEventListener('click', ()=>{
+      nameInput.focus();
+    });
+
+    applyBtn.addEventListener('click', ()=>{
+      const v = nameInput.value.trim();
+      if(!v) return alert('Escreva algo bonito para aplicar.');
+      mainText.innerHTML = v.replace(/\n/g,'<br>');
+      nameInput.value = '';
+    });
+
+    // small friendly greeting in console
+    console.log('%cUm site fofo criado com carinho 💖', 'font-weight:700;color:#ff6fb5');
+  </script>
+</body>
+</html>
